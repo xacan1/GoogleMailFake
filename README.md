@@ -1,2 +1,2 @@
 # GoogleMailFake
-Фейкова почта Gmail
+Фейковая почта Gmail
