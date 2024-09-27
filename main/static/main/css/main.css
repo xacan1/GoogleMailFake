@@ -1,0 +1,59 @@
+@font-face {
+    font-family: "Roboto Regular";
+    src: url("..static/main/fonts/Roboto-Regular.ttf");
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* font-family: 'Proxima Nova Rg', sans-serif; */
+    font-size: 14px;
+    padding: 0;
+    margin: 0;
+    color: black;
+    background-color: #F6F8FC;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    padding: 0;
+    margin: 0;
+    /* text-transform: uppercase; */
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    margin: 0;
+    padding: 0;
+}
+
+.btn-search-g {
+    border-radius: 50%;
+}
+
+.btn-search-g:hover {
+    background-color: #E7EAED;
+}
+
+.border-radius-g {
+    border-radius: 20px;
+}
+
+.search-g {
+    background-color: #EAF1FB;
+}
+
+.form-control-g {
+    border: #FFFFFF;
+    background-color: #EAF1FB;
+}

@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from django.views.generic import FormView, CreateView
+from mail.forms import *
 
-# Create your views here.
+
+class MailSPAView(FormView):
+    form_class = SimpleForm
+    template_name = 'mail/index.html'
