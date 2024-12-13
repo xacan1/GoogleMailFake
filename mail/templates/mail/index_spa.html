@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="shortcut icon" href="{% static 'main/img/gmail.ico' %}">
+	<link rel="stylesheet" href="{% static 'mail/css/bootstrap.min.css' %}" />
+	<link rel="stylesheet" href="{% static 'mail/css/style.css' %}" />
+	<title>{{ title }}</title>
+</head>
+
+<body>
+	<div class="container-fluid p-0">
+		<header class="header container-fluid d-flex p-0 py-2 position-relative">
+			<div class="row align-items-center justify-content-between mx-0 w-100">
+				<div class="col-auto nav-top d-flex">
+					<button id="menu" class="menu btn center-flex p-0 mx-1 rounded-circle" title="Главное меню">
+						<svg focusable="false" viewBox="0 0 24 24">
+							<path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
+						</svg>
+					</button>
+					<div class="center-flex" title="Почта">
+						<img src="{% static 'mail/img/logo.png' %}" alt="Logo" />
+					</div>
+				</div>
+
+				<form class="col-auto search-form d-flex center-flex px-2 border-1" id="search">
+					<button class="btn center-flex rounded-circle" title="Поиск">
+						<img src="{% static 'mail/img/icons/search.svg' %}" alt="Search" />
+					</button>
+
+					<input id="search-input" class="search-input form-control border-0 shadow-none ms-2 p-0" type="text"
+						aria-label="Поиск в почте" placeholder="Поиск в почте" />
+
+					<button class="btn center-flex rounded-circle" title="Очистить поле поиска">
+						<img src="{% static 'mail/img/icons/clear.svg' %}" alt="Clear" />
+					</button>
+					<button class="btn center-flex rounded-circle ms-2" title="Показать параметры поиска">
+						<img src="{% static 'mail/img/icons/filter.svg' %}" alt="Clear" />
+					</button>
+					<div class="col-auto position-absolute start-0">
+						<div class="search-popup" id="search-popup">
+							<div class="tags d-flex align-items-center">
+								<button class="tag">Содержит прикрепленные файлы</button>
+								<button class="tag">За последние 7 дней</button>
+								<button class="tag">От меня</button>
+							</div>
+
+							<div class="history">
+								<div class="history-item">
+									<img src="{% static 'mail/img/icons/delay.png' %}" alt="" />
+									иин
+								</div>
+								<div class="history-item">
+									<img src="{% static 'mail/img/icons/delay.png' %}" alt="" />
+									google
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+
+
+				<div class="col-auto center-flex justify-content-end">
+					<button class="btn center-flex rounded-circle p-4 m-1">
+						<img src="{% static 'mail/img/icons/faq.svg' %}" alt="Faq" />
+					</button>
+					<button class="btn center-flex rounded-circle p-4 m-1">
+						<img src="{% static 'mail/img/icons/setting.svg' %}" alt="Setting" />
+					</button>
+					<button class="btn center-flex rounded-circle p-4 m-1">
+						<img src="{% static 'mail/img/icons/service.svg' %}" alt="Service" />
+					</button>
+					<button class="user btn center-flex rounded-circle p-2 m-1" id="account-btn">
+						<img class="rounded-circle" src="{% static 'mail/img/icons/profile.png' %}" alt="avatar" />
+					</button>
+				</div>
+
+				<div class="col-auto account-popup" id="account">
+					<div class="center-flex justify-content-between">
+						<p class="popup-title mb-0 mx-auto center-flex">
+							{% if user.is_authenticated %}
+							{{ user }}
+							{% else %}
+							user@gmail.com
+							{% endif %}
+						</p>
+						<button id="account-close-btn" class="btn center-flex rounded-circle p-3">
+							<img src="{% static 'mail/img/icons/clear.svg' %}" alt="Close" />
+						</button>
+					</div>
+					<div class="center-flex flex-column">
+						<div class="account-user rounded-circle position-relative">
+							<img src="{% static 'mail/img/icons/profile.png' %}" alt="avatar" />
+							<div class="account-pencil">
+								<svg width="18" height="18" viewBox="0 0 24 24" focusable="false" class="KkhfNb NMm5M">
+									<path
+										d="M20.41 4.94l-1.35-1.35c-.78-.78-2.05-.78-2.83 0L3 16.82V21h4.18L20.41 7.77c.79-.78.79-2.05 0-2.83zm-14 14.12L5 19v-1.36l9.82-9.82 1.41 1.41-9.82 9.83z">
+									</path>
+								</svg>
+							</div>
+						</div>
+						{% if user.is_authenticated %}
+						<p class="popup-welcome m-0">Здравствуйте, {{ user }}!</p>
+						{% else %}
+						<p class="popup-welcome m-0">Войдите</p>
+						{% endif %}
+
+						<button class="popup-custom-btn mt-2">
+							Управления аккаунтом Google
+						</button>
+
+						<div class="btn-box center-flex w-100">
+							<button class="mid-btn create d-flex align-items-center">
+								<div class="popup-icon">
+									<svg width="21" height="21" viewBox="0 0 24 24" focusable="false"
+										class="aFCkf NMm5M">
+										<path d="M20 13h-7v7h-2v-7H4v-2h7V4h2v7h7v2z"></path>
+									</svg>
+								</div>
+								Добавить<br />аккаунт
+							</button>
+							<form method="post" action="{% url 'logout' %}">
+								{% csrf_token %}
+								<button class="mid-btn exit d-flex align-items-center">
+									<div class="popup-icon">
+										<svg height="24" viewBox="0 0 24 24" width="24" focusable="false" class="NMm5M">
+											<path
+												d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z">
+											</path>
+											<path d="M0 0h24v24H0z" fill="none"></path>
+										</svg>
+									</div>
+									Выйти
+								</button>
+							</form>
+							
+						</div>
+
+						<button class="storage">
+							<img src="{% static 'mail/img/icons/cloud.svg' %}" alt="cloud" />
+							<p class="m-0">Занято: 76 % из 15 ГБ</p>
+						</button>
+
+						<div class="popup-links d-flex flex-column align-items-center">
+							<a href="">Политика конфиденциальности</a> ·
+							<a href="">Условия использования</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="overlay" class="overlay"></div>
+		</header>
+
+		<main class="d-flex w-100">
+			<div class="left-bar d-flex h-100 flex-column pe-2 z-2">
+				<button class="send w-100 ms-2 mt-2 mb-4 rounded-4 position-relative" id="send"></button>
+
+				<div class="d-flex flex-column">
+					<div class="item d-flex w-100 rounded-end-5 inbox active counted" data-tab="inbox-content">
+						<div class="pic position-relative">
+							<img src="{% static 'mail/img/icons/inbox.png' %}" alt="inbox" />
+						</div>
+						<span>Входящие</span><span class="item-count">1</span>
+					</div>
+					<div class="item d-flex w-100 rounded-end-5 marks">
+						<div class="pic position-relative">
+							<img src="{% static 'mail/img/icons/marks.png' %}" alt="marks" />
+						</div>
+						<span>Помеченные</span><span class="item-count"></span>
+					</div>
+					<div class="item d-flex w-100 rounded-end-5 delay">
+						<div class="pic position-relative">
+							<img src="{% static 'mail/img/icons/delay.png' %}" alt="delay" />
+						</div>
+						<span>Отложенные</span><span class="item-count"></span>
+					</div>
+					<div class="item d-flex w-100 rounded-end-5 sended">
+						<div class="pic position-relative">
+							<img src="{% static 'mail/img/icons/sended.png' %}" alt="sended" />
+						</div>
+						<span>Отправленные</span><span class="item-count"></span>
+					</div>
+					<div class="item d-flex w-100 rounded-end-5 draft counted">
+						<div class="pic position-relative">
+							<img src="{% static 'mail/img/icons/draft.png' %}" alt="draft" />
+						</div>
+						<span>Черновики</span><span class="item-count">1</span>
+					</div>
+					<div class="item d-flex w-100 rounded-end-5 more">
+						<div class="pic position-relative">
+							<img src="{% static 'mail/img/icons/more.png' %}" alt="more" />
+						</div>
+						<span>Ещё</span>
+					</div>
+				</div>
+			</div>
+
+			<div id="content" class="content w-100 mb-4 rounded-4">
+
+
+				<div id="sticky" class="sticky align-items-center justify-content-between me-4 px-4">
+					<div class="left">
+						<div class="wrapper center-flex">
+							<div class="chk d-flex" title="Выбрать">
+								<div class="button">
+									<img src="{% static 'mail/img/icons/chk.png' %}" alt="chk" />
+								</div>
+								<div class="button">
+									<img src="{% static 'mail/img/icons/after.png' %}" alt="after" />
+								</div>
+							</div>
+							<button class="btn center-flex rounded-circle p-2 me-2">
+								<img src="{% static 'mail/img/icons/refresh.png' %}" alt="refresh" />
+							</button>
+							<button class="btn center-flex rounded-circle p-2">
+								<img src="{% static 'mail/img/icons/set.png' %}" alt="set" />
+							</button>
+						</div>
+					</div>
+
+					<div class="right center-flex mp-auto">
+						<div class="count center-flex rounded-3">1-1 из 1</div>
+						<button class="btn center-flex rounded-circle p-2" title="Пред.">
+							<img src="{% static 'mail/img/icons/prev.png' %}" alt="prev" />
+						</button>
+						<button class="btn center-flex rounded-circle p-2" title="След.">
+							<img src="{% static 'mail/img/icons/next.png' %}" alt="next" />
+						</button>
+					</div>
+				</div>
+				<div id="inbox-content" class="inbox-content">
+					<div class="inbox-tabs d-flex">
+						<div class="inbox-tab d-flex align-items-center in active">
+							<div class="icon h-100"></div>
+							<div class="info">Несортированные</div>
+						</div>
+						<div class="inbox-tab d-flex align-items-center promo">
+							<div class="icon h-100"></div>
+							<div class="info">Промоакции</div>
+						</div>
+						<div class="inbox-tab d-flex align-items-center soc">
+							<div class="icon h-100"></div>
+							<div class="info">Соцсети</div>
+						</div>
+						<div class="inbox-tab d-flex align-items-center alert">
+							<div class="icon h-100"></div>
+							<div class="info">Оповещения</div>
+						</div>
+					</div>
+
+					<div class="messages-content">
+						<div class="messages ">
+							<div id="message" class="message center-flex justify-content-between py-2 ps-3">
+								<div class="left center-flex">
+									<div class="message-icon checkbox"></div>
+									<div class="message-icon star"></div>
+									<div class="message-icon level"></div>
+									<div class="header">Pinterest</div>
+								</div>
+								<div class="center center-flex">
+									<div class="title">
+										Подтвердите свой адрес электронной почты
+									</div>
+									<div class="descr">
+										<span>
+											- Не забудьте подтвердить свой адрес электронной почты!
+											Проверьте, что вы правильно указали свой электронный
+											адрес. Подтвердите эл. адрес Не регистрировались в
+											Pinterest? Сообщите нам. Добро пожаловать в
+										</span>
+									</div>
+								</div>
+								<div class="right center-flex">
+									<div class="date">8 нояб.</div>
+									<div class="options"></div>
+								</div>
+
+								<div class="help">
+									<div class="new__bottom-btn accent">
+										<img src="{% static 'mail/img/icons/archive.png' %}" alt="archive" />
+									</div>
+									<div class="new__bottom-btn">
+										<img src="{% static 'mail/img/icons/format-10.png' %}" alt="format-10" />
+									</div>
+									<div class="new__bottom-btn">
+										<img src="{% static 'mail/img/icons/draft.png' %}" alt="draft" />
+									</div>
+									<div class="new__bottom-btn">
+										<img src="{% static 'mail/img/icons/delay.png' %}" alt="delay" />
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div id="mail" class="mail p-2">
+							<div class="mail-content">
+								<h2>Подтвердите свой адрес электронной почты</h2>
+								<div class="mail-content-user d-flex align-items-center justify-content-between">
+									<img class='rounded-circle me-4' src="{% static 'mail/img/icons/profile.png' %}"
+										alt="profile" />
+									<div class="profile">
+										<p class="profile-name m-0">
+											Pinterest <span> &lt;pinterest@gmail.com&gt; </span>
+										</p>
+										<p class='m-0 profile-who'>кому: мне</p>
+									</div>
+									<p class='user-date m-0 ms-auto me-2'>8 нояб.</p>
+									<button class="btn center-flex rounded-circle p-2">
+										<img src="{% static 'mail/img/icons/start.png' %}" alt="start" />
+									</button>
+									<button class="btn center-flex rounded-circle p-2">
+										<img src="{% static 'mail/img/icons/format-4.png' %}" alt="format-4" />
+									</button>
+									<button class="btn center-flex rounded-circle p-2">
+										<img src="{% static 'mail/img/icons/reply.png' %}" alt="reply" />
+									</button>
+									<button class="btn center-flex rounded-circle p-2">
+										<img src="{% static 'mail/img/icons/set.png' %}" alt="set" />
+									</button>
+								</div>
+
+								<div class='mail-text'>
+									Не забудьте подтвердить свой адрес электронной почты! <br /><br />Проверьте, что вы
+									правильно указали свой электронный адрес. Подтвердите эл. адрес Не регистрировались
+									в
+									Pinterest? Сообщите нам. <br /><br />Добро пожаловать в Pinterest
+								</div>
+
+								<div class='mail-box'>
+									<button class='mail-box-btn next'>
+										<img src="{% static 'mail/img/icons/reply.png' %}" alt="reply">
+										Ответить
+									</button>
+									<button class='mail-box-btn prev'>
+										<img src="{% static 'mail/img/icons/reply-2.png' %}" alt="reply-2">
+										Переслать
+									</button>
+									<button class='mail-box-btn smile'>
+										<img src="{% static 'mail/img/icons/format-4.png' %}" alt="format-4">
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="content-footer" class="content-footer center-flex w-100 my-4 px-4">
+					<div class="used">
+						<div class="bar"></div>
+						<div class="bar-info d-flex align-items-center">
+							<span>Использовано 0,01 ГБ из 15 ГБ.</span>
+							<div class="bar-pic"></div>
+						</div>
+					</div>
+					<div class="policy">
+						<a href="">Условия использования</a> ·
+						<a href="">Конфиденциальность</a> ·
+						<a href="">Правила программы</a>
+					</div>
+					<div class="act-time d-flex flex-column align-items-end">
+						<span> Последние действия в аккаунте: 5 часов назад </span>
+						<a href="">Подробные сведения</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="d-flex flex-column">
+				<div class="widgets-item calendar"></div>
+				<div class="widgets-item contacts"></div>
+				<div class="widgets-item keep"></div>
+				<div class="widgets-item tasks"></div>
+			</div>
+		</main>
+
+		<div class="new" id="new">
+			<div class="new__top">
+				<p class="new__top-title m-0">Новое сообщение</p>
+				<div class="new__top-btn new__top-btn-first">
+					<img src="{% static 'mail/img/icons/new-1.png' %}" alt="new-1" />
+				</div>
+				<div class="new__top-btn resize">
+					<img src="{% static 'mail/img/icons/new-2.png' %}" alt="new-2" />
+				</div>
+				<div class="new__top-btn" id="new-close">
+					<img src="{% static 'mail/img/icons/new-3.png' %}" alt="new-3" />
+				</div>
+			</div>
+
+			<div class="new-container">
+				<div class="new__who">
+					<p class="m-0 me-2">Кому</p>
+					<input class="new__who-input" type="text" />
+				</div>
+
+				<input class="new__input-title" type="text" placeholder="Тема" />
+
+				<textarea rows="14" class="new__input-textarea w-100"></textarea>
+
+				<div class="new__bottom">
+					<button class="new__bottom-send">Отправить</button>
+
+					<div class="new__bottom-btn">
+						<img src="{% static 'mail/img/icons/format-1.png' %}" alt="format-1" />
+					</div>
+					<div class="new__bottom-btn">
+						<img src="{% static 'mail/img/icons/format-2.png' %}" alt="format-2" />
+					</div>
+					<div class="new__bottom-btn">
+						<img src="{% static 'mail/img/icons/format-3.png' %}" alt="format-3" />
+					</div>
+					<div class="new__bottom-btn">
+						<img src="{% static 'mail/img/icons/format-4.png' %}" alt="format-4" />
+					</div>
+					<div class="new__bottom-btn">
+						<img src="{% static 'mail/img/icons/format-5.png' %}" alt="format-5" />
+					</div>
+					<div class="new__bottom-btn">
+						<img src="{% static 'mail/img/icons/format-6.png' %}" alt="format-6" />
+					</div>
+					<div class="new__bottom-btn">
+						<img src="{% static 'mail/img/icons/format-7.png' %}" alt="format-7" />
+					</div>
+					<div class="new__bottom-btn">
+						<img src="{% static 'mail/img/icons/format-8.png' %}" alt="format-8" />
+					</div>
+					<div class="new__bottom-btn">
+						<img src="{% static 'mail/img/icons/format-9.png' %}" alt="format-9" />
+					</div>
+					<div class="new__bottom-btn ms-auto">
+						<img src="{% static 'mail/img/icons/format-10.png' %}" alt="format-10" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="{% static 'mail/js/bootstrap.bundle.min.js' %}"></script>
+	<script src="{% static 'mail/js/app.js' %}"></script>
+</body>
+
+</html>
