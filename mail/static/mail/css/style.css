@@ -6,6 +6,11 @@
 	font-size: 14px;
 }
 
+a {
+	text-decoration: none;
+	color: black;
+}
+
 body {
 	background-color: #f6f8fc;
 }

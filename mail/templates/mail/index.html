@@ -4,67 +4,122 @@
 {% block content %}
 <!-- START LIST MAIL -->
 <div id="inbox-content" class="inbox-content">
-	<div class="inbox-tabs d-flex">
-		<div class="inbox-tab d-flex align-items-center in active">
-			<div class="icon h-100"></div>
-			<div class="info">Несортированные</div>
-		</div>
-		<div class="inbox-tab d-flex align-items-center promo">
-			<div class="icon h-100"></div>
-			<div class="info">Промоакции</div>
-		</div>
-		<div class="inbox-tab d-flex align-items-center soc">
-			<div class="icon h-100"></div>
-			<div class="info">Соцсети</div>
-		</div>
-		<div class="inbox-tab d-flex align-items-center alert">
-			<div class="icon h-100"></div>
-			<div class="info">Оповещения</div>
-		</div>
-	</div>
+	<form action="" method="get">
+		{% csrf_token %}
+		<div id="sticky" class="sticky align-items-center justify-content-between me-4 px-4">
+			<div class="left">
+				<div class="wrapper center-flex">
+					<div class="chk d-flex" title="Выбрать">
+						<div class="button">
+							<img src="{% static 'mail/img/icons/chk.png' %}" alt="" />
+						</div>
+						<div class="button">
+							<img src="{% static 'mail/img/icons/after.png' %}" alt="" />
+						</div>
+					</div>
+					<button class="btn center-flex rounded-circle p-2 me-2">
+						<img src="{% static 'mail/img/icons/refresh.png' %}" alt="" />
+					</button>
+					<button type="submit">
+						<img src="{% static 'mail/img/icons/format-10.png' %}" alt="">
+					</button>
+					<button class="btn center-flex rounded-circle p-2">
+						<img src="{% static 'mail/img/icons/set.png' %}" alt="" />
+					</button>
+				</div>
+			</div>
 
-	<div class="messages-content">
-		<div class="messages w-100">
-			<div id="message" class="message center-flex justify-content-between py-2 ps-3">
-				<div class="left center-flex">
-					<div class="message-icon checkbox"></div>
-					<div class="message-icon star"></div>
-					<div class="message-icon level"></div>
-					<div class="header">Pinterest</div>
+			<div class="right center-flex mp-auto">
+				<div class="count center-flex rounded-3">1-1 из 1</div>
+				<button class="btn center-flex rounded-circle p-2" title="Пред.">
+					<img src="{% static 'mail/img/icons/prev.png' %}" alt="" />
+				</button>
+				<button class="btn center-flex rounded-circle p-2" title="След.">
+					<img src="{% static 'mail/img/icons/next.png' %}" alt="" />
+				</button>
+			</div>
+		</div>
+		<div id="inbox-content" class="inbox-content">
+			<div class="inbox-tabs d-flex">
+				<div class="inbox-tab d-flex align-items-center in active">
+					<div class="icon h-100"></div>
+					<div class="info">Несортированные</div>
 				</div>
-				<div class="center center-flex">
-					<div class="title">
-						Подтвердите свой адрес электронной почты
-					</div>
-					<div class="descr">
-						<span>
-							- Не забудьте подтвердить свой адрес электронной почты!
-							Проверьте, что вы правильно...
-						</span>
-					</div>
+				<div class="inbox-tab d-flex align-items-center promo">
+					<div class="icon h-100"></div>
+					<div class="info">Промоакции</div>
 				</div>
-				<div class="right center-flex">
-					<div class="date">8 нояб.</div>
-					<div class="options"></div>
+				<div class="inbox-tab d-flex align-items-center soc">
+					<div class="icon h-100"></div>
+					<div class="info">Соцсети</div>
 				</div>
+				<div class="inbox-tab d-flex align-items-center alert">
+					<div class="icon h-100"></div>
+					<div class="info">Оповещения</div>
+				</div>
+			</div>
 
-				<div class="help">
-					<div class="new__bottom-btn accent">
-						<img src="{% static 'mail/img/icons/archive.png' %}" alt="" />
+			<div class="messages-content">
+				<div class="messages ">
+					{% for email in emails %}
+					<div id="message-id-{{ email.pk }}" class="message center-flex justify-content-between py-2 ps-5">
+						<div class="left center-flex ps-3">
+							<input type="checkbox" id="message-chk-{{ email.pk }}" value="message-chk-{{ email.pk }}">
+							<!-- <label for="message-chk-{{ email.pk }}"><img src="{% static 'mail/img/icons/message-chk.png' %}" alt=""></label> -->
+							<img src="{% static 'mail/img/icons/message-star.png' %}" alt="">
+							<img src="{% static 'mail/img/icons/message-important.png' %}" alt="">
+							<!-- <div class="message-icon checkbox"></div>
+							<div class="message-icon star"></div>
+							<div class="message-icon level"></div> -->
+							{% if not email.read %}
+							<div class="fw-bold text-nowrap"><a href="{% url 'mail-body' email.pk %}">{{ email.sender }}</a></div>
+							{% else %}
+							<div class="text-nowrap"><a href="{% url 'mail-body' email.pk %}">{{ email.sender }}</a></div>
+							{% endif %}
+						</div>
+						<a href="{% url 'mail-body' email.pk %}">
+							<div class="center center-flex">
+								{% if not email.read %}
+								<div class="fw-bold px-2">
+									{{ email.subject }}
+								</div>
+								{% else %}
+								<div class="px-2">
+									{{ email.subject }}
+								</div>
+								{% endif %}
+								<div class="descr">
+									<span>
+										{{ email.body|truncatechars:80 }}
+									</span>
+								</div>
+							</div>
+						</a>
+						<div class="right center-flex">
+							<div class="date">{{ email.timestamp }}</div>
+							<div class="options"></div>
+						</div>
+
+						<div class="help">
+							<div class="new__bottom-btn accent">
+								<img src="{% static 'mail/img/icons/archive.png' %}" alt="" />
+							</div>
+							<div class="new__bottom-btn">
+								<img src="{% static 'mail/img/icons/format-10.png' %}" alt="" />
+							</div>
+							<div class="new__bottom-btn">
+								<img src="{% static 'mail/img/icons/draft.png' %}" alt="" />
+							</div>
+							<div class="new__bottom-btn">
+								<img src="{% static 'mail/img/icons/delay.png' %}" alt="" />
+							</div>
+						</div>
 					</div>
-					<div class="new__bottom-btn">
-						<img src="{% static 'mail/img/icons/format-10.png' %}" alt="" />
-					</div>
-					<div class="new__bottom-btn">
-						<img src="{% static 'mail/img/icons/draft.png' %}" alt="" />
-					</div>
-					<div class="new__bottom-btn">
-						<img src="{% static 'mail/img/icons/delay.png' %}" alt="" />
-					</div>
+					{% endfor %}
 				</div>
 			</div>
 		</div>
-	</div>
+	</form>
 </div>
 
 <!-- END LIST MAIL -->
