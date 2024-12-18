@@ -20,8 +20,8 @@ from django.urls import path, include
 urlpatterns = [
     path('admin-mail/', admin.site.urls),
     path('', include('main.urls')),
-    path('', include('mail.urls')),
-    path('', include('api.urls')),
+    path('mail/u/0/', include('mail.urls')),
+    # path('', include('api.urls')),
 ]
 
 # handler404 = PageNotFound.as_view()

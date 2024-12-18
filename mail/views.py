@@ -7,7 +7,7 @@ from mail.models import *
 
 class RedirectIndexView(RedirectView):
     permanent = True
-    url = 'mail/'
+    url = reverse_lazy('home')
 
 
 class MailListView(LoginRequiredMixin, ListView):
