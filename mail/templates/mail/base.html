@@ -22,7 +22,8 @@
 						</svg>
 					</button>
 					<div class="center-flex" title="Почта">
-						<a href="{% url 'mail-list' 'vhodyashie' %}"><img src="{% static 'mail/img/logo.png' %}" alt="Logo" /></a>
+						<a href="{% url 'mail-list' 'vhodyashie' %}"><img src="{% static 'mail/img/logo.png' %}"
+								alt="Logo" /></a>
 					</div>
 				</div>
 
@@ -104,7 +105,7 @@
 						</div>
 
 						{% if user.is_authenticated %}
-						<p class="popup-welcome m-0">Здравствуйте, {{ user }}!</p>
+						<p class="popup-welcome m-0">Здравствуйте, {% if user.first_name %} {{ user.first_name }} {% else %} {{ user }} {% endif %}!</p>
 						{% else %}
 						<p class="popup-welcome m-0">Войдите</p>
 						{% endif %}
@@ -159,35 +160,45 @@
 				<button class="send w-100 ms-2 mt-2 mb-4 rounded-4 position-relative" id="send"></button>
 
 				<div class="d-flex flex-column">
-					<div class="item d-flex w-100 rounded-end-5 inbox counted {% if 'vhodyashie' in request.path %} active {% endif %}" data-tab="inbox-content">
+					<div class="item d-flex w-100 rounded-end-5 inbox counted {% if 'vhodyashie' in request.path %} active {% endif %}"
+						data-tab="inbox-content">
 						<div class="pic position-relative">
 							<img src="{% static 'mail/img/icons/inbox.png' %}" alt="" />
 						</div>
-						<span><a href="{% url 'mail-list' 'vhodyashie' %}">Входящие</a></span><span class="item-count"></span>
+						<span><a href="{% url 'mail-list' 'vhodyashie' %}">Входящие</a></span><span
+							class="item-count"></span>
 					</div>
-					<div class="item d-flex w-100 rounded-end-5 marks {% if 'pomechennye' in request.path %} active {% endif %}">
+					<div
+						class="item d-flex w-100 rounded-end-5 marks {% if 'pomechennye' in request.path %} active {% endif %}">
 						<div class="pic position-relative">
 							<img src="{% static 'mail/img/icons/marks.png' %}" alt="" />
 						</div>
-						<span><a href="{% url 'mail-list' 'pomechennye' %}">Помеченные</a></span><span class="item-count"></span>
+						<span><a href="{% url 'mail-list' 'pomechennye' %}">Помеченные</a></span><span
+							class="item-count"></span>
 					</div>
-					<div class="item d-flex w-100 rounded-end-5 delay {% if 'otlozhennye' in request.path %} active {% endif %}">
+					<div
+						class="item d-flex w-100 rounded-end-5 delay {% if 'otlozhennye' in request.path %} active {% endif %}">
 						<div class="pic position-relative">
 							<img src="{% static 'mail/img/icons/delay.png' %}" alt="" />
 						</div>
-						<span><a href="{% url 'mail-list' 'otlozhennye' %}">Отложенные</a></span><span class="item-count"></span>
+						<span><a href="{% url 'mail-list' 'otlozhennye' %}">Отложенные</a></span><span
+							class="item-count"></span>
 					</div>
-					<div class="item d-flex w-100 rounded-end-5 sended {% if 'otpravlennye' in request.path %} active {% endif %}">
+					<div
+						class="item d-flex w-100 rounded-end-5 sended {% if 'otpravlennye' in request.path %} active {% endif %}">
 						<div class="pic position-relative">
 							<img src="{% static 'mail/img/icons/sended.png' %}" alt="" />
 						</div>
-						<span><a href="{% url 'mail-list' 'otpravlennye' %}">Отправленные</a></span><span class="item-count"></span>
+						<span><a href="{% url 'mail-list' 'otpravlennye' %}">Отправленные</a></span><span
+							class="item-count"></span>
 					</div>
-					<div class="item d-flex w-100 rounded-end-5 draft counted {% if 'chernoviki' in request.path %} active {% endif %}">
+					<div
+						class="item d-flex w-100 rounded-end-5 draft counted {% if 'chernoviki' in request.path %} active {% endif %}">
 						<div class="pic position-relative">
 							<img src="{% static 'mail/img/icons/draft.png' %}" alt="" />
 						</div>
-						<span><a href="{% url 'mail-list' 'chernoviki' %}">Черновики</a></span><span class="item-count"></span>
+						<span><a href="{% url 'mail-list' 'chernoviki' %}">Черновики</a></span><span
+							class="item-count"></span>
 					</div>
 					<div class="item d-flex w-100 rounded-end-5 more">
 						<div class="pic position-relative">
@@ -233,68 +244,73 @@
 			</div>
 		</main>
 
-		<!-- MODAL WINDOW -->
-		<div class="new" id="new">
-			<div class="new__top">
-				<p class="new__top-title m-0">Новое сообщение</p>
-				<div class="new__top-btn new__top-btn-first">
-					<img src="{% static 'mail/img/icons/new-1.png' %}" alt="" />
+		<!-- MODAL WINDOW NEW MAIL -->
+		<form action="{% url 'home' %}" method="post">
+			<div class="new" id="new">
+				<div class="new__top">
+					<p class="new__top-title m-0">Новое сообщение</p>
+					<div class="new__top-btn new__top-btn-first">
+						<img src="{% static 'mail/img/icons/new-1.png' %}" alt="" />
+					</div>
+					<div class="new__top-btn resize">
+						<img src="{% static 'mail/img/icons/new-2.png' %}" alt="" />
+					</div>
+					<div class="new__top-btn" id="new-close">
+						<img src="{% static 'mail/img/icons/new-3.png' %}" alt="" />
+					</div>
 				</div>
-				<div class="new__top-btn resize">
-					<img src="{% static 'mail/img/icons/new-2.png' %}" alt="" />
-				</div>
-				<div class="new__top-btn" id="new-close">
-					<img src="{% static 'mail/img/icons/new-3.png' %}" alt="" />
+
+				<div class="new-container">
+					{% csrf_token %}
+					<div class="new__who">
+						<p class="m-0 me-2">Кому</p>
+						{{ form.recipients }}
+					</div>
+					<div hidden>{{ form.sender }}</div>
+					{{ form.category }}
+					{{ form.user }}
+					{{ form.subject }}
+					{{ form.body }}
+
+					<div class="new__bottom">
+						<button class="new__bottom-send" type="submit">Отправить</button>
+
+						<div class="new__bottom-btn">
+							<img src="{% static 'mail/img/icons/format-1.png' %}" alt="" />
+						</div>
+						<div class="new__bottom-btn">
+							<img src="{% static 'mail/img/icons/format-2.png' %}" alt="" />
+						</div>
+						<div class="new__bottom-btn">
+							<img src="{% static 'mail/img/icons/format-3.png' %}" alt="" />
+						</div>
+						<div class="new__bottom-btn">
+							<img src="{% static 'mail/img/icons/format-4.png' %}" alt="" />
+						</div>
+						<div class="new__bottom-btn">
+							<img src="{% static 'mail/img/icons/format-5.png' %}" alt="" />
+						</div>
+						<div class="new__bottom-btn">
+							<img src="{% static 'mail/img/icons/format-6.png' %}" alt="" />
+						</div>
+						<div class="new__bottom-btn">
+							<img src="{% static 'mail/img/icons/format-7.png' %}" alt="" />
+						</div>
+						<div class="new__bottom-btn">
+							<img src="{% static 'mail/img/icons/format-8.png' %}" alt="" />
+						</div>
+						<div class="new__bottom-btn">
+							<img src="{% static 'mail/img/icons/format-9.png' %}" alt="" />
+						</div>
+						<div class="new__bottom-btn ms-auto">
+							<img src="{% static 'mail/img/icons/format-10.png' %}" alt="" />
+						</div>
+					</div>
 				</div>
 			</div>
-
-			<div class="new-container">
-				<div class="new__who">
-					<p class="m-0 me-2">Кому</p>
-					<input class="new__who-input" type="text" />
-				</div>
-
-				<input class="new__input-title" type="text" placeholder="Тема" />
-
-				<textarea rows="14" class="new__input-textarea w-100"></textarea>
-
-				<div class="new__bottom">
-					<button class="new__bottom-send">Отправить</button>
-
-					<div class="new__bottom-btn">
-						<img src="{% static 'mail/img/icons/format-1.png' %}" alt="" />
-					</div>
-					<div class="new__bottom-btn">
-						<img src="{% static 'mail/img/icons/format-2.png' %}" alt="" />
-					</div>
-					<div class="new__bottom-btn">
-						<img src="{% static 'mail/img/icons/format-3.png' %}" alt="" />
-					</div>
-					<div class="new__bottom-btn">
-						<img src="{% static 'mail/img/icons/format-4.png' %}" alt="" />
-					</div>
-					<div class="new__bottom-btn">
-						<img src="{% static 'mail/img/icons/format-5.png' %}" alt="" />
-					</div>
-					<div class="new__bottom-btn">
-						<img src="{% static 'mail/img/icons/format-6.png' %}" alt="" />
-					</div>
-					<div class="new__bottom-btn">
-						<img src="{% static 'mail/img/icons/format-7.png' %}" alt="" />
-					</div>
-					<div class="new__bottom-btn">
-						<img src="{% static 'mail/img/icons/format-8.png' %}" alt="" />
-					</div>
-					<div class="new__bottom-btn">
-						<img src="{% static 'mail/img/icons/format-9.png' %}" alt="" />
-					</div>
-					<div class="new__bottom-btn ms-auto">
-						<img src="{% static 'mail/img/icons/format-10.png' %}" alt="" />
-					</div>
-				</div>
-			</div>
-		</div>
+		</form>
 	</div>
+
 	<script src="{% static 'mail/js/bootstrap.bundle.min.js' %}"></script>
 	<script src="{% static 'mail/js/app.js' %}"></script>
 </body>

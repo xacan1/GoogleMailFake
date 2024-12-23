@@ -4,7 +4,8 @@ from mail.views import RedirectIndexView
 
 
 urlpatterns = [
-    path('mail/', RedirectIndexView.as_view()),
+    path('', RedirectIndexView.as_view()),
     path('login/', LoginUserView.as_view(), name='login'),
     path('logout/', LogoutUserView.as_view(), name='logout'),
+    path('register/', RegisterUserView.as_view(), name='register'),
 ]

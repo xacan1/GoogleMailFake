@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from main.views import PageNotFound
 
 urlpatterns = [
     path('admin-mail/', admin.site.urls),
@@ -24,6 +25,6 @@ urlpatterns = [
     # path('', include('api.urls')),
 ]
 
-# handler404 = PageNotFound.as_view()
+handler404 = PageNotFound.as_view()
 admin.site.site_header = 'Панель администрирования MAIL'
 admin.site.site_title = 'Панель администрирования MAIL'

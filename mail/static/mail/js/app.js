@@ -17,6 +17,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const sendBtn = document.getElementById('send');
     const leftBar = document.querySelector('.left-bar');
 
+    const replyBtn1 = document.getElementById('button-reply1');
+    const replyBtn2 = document.getElementById('button-reply2');
+
     leftBar.addEventListener('mouseenter', function () {
         leftBar.classList.add('hovered');
         leftBar.classList.add('active');
@@ -37,6 +40,20 @@ document.addEventListener('DOMContentLoaded', function () {
     const newPopup = document.getElementById('new');
     const newClose = document.getElementById('new-close');
 
+    const newReplyPopup = document.getElementById('new-reply');
+
+    if (replyBtn1) {
+        replyBtn1.addEventListener('click', function () {
+            newReplyPopup.classList.toggle('active');
+        })
+    }
+
+    if (replyBtn2) {
+        replyBtn2.addEventListener('click', function () {
+            newReplyPopup.classList.toggle('active');
+        })
+    }
+
     menuBtn.addEventListener('click', function () {
         menuBtn.classList.toggle('active');
         leftBar.classList.toggle('active');
@@ -48,6 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     newClose.addEventListener('click', function () {
         newPopup.classList.remove('active');
+        newReplyPopup.classList.remove('active');
     });
 
     const mails_item = document.querySelectorAll('.item');

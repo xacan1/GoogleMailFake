@@ -2,117 +2,26 @@
 {% load static %}
 
 {% block content %}
-<div id="sticky" class="sticky align-items-center justify-content-between me-4 px-4">
-    <div class="left">
-        <div class="wrapper center-flex">
-            <div class="chk d-flex" title="Выбрать">
-                <div class="button">
-                    <img src="{% static 'mail/img/icons/chk.png' %}" alt="" />
-                </div>
-                <div class="button">
-                    <img src="{% static 'mail/img/icons/after.png' %}" alt="" />
-                </div>
-            </div>
-            <button class="btn center-flex rounded-circle p-2 me-2">
-                <img src="{% static 'mail/img/icons/refresh.png' %}" alt="" />
-            </button>
-            <button class="btn center-flex rounded-circle p-2">
-                <img src="{% static 'mail/img/icons/set.png' %}" alt="" />
-            </button>
-        </div>
-    </div>
-
-    <div class="right center-flex mp-auto">
-        <div class="count center-flex rounded-3">1-1 из 1</div>
-        <button class="btn center-flex rounded-circle p-2" title="Пред.">
-            <img src="{% static 'mail/img/icons/prev.png' %}" alt="" />
-        </button>
-        <button class="btn center-flex rounded-circle p-2" title="След.">
-            <img src="{% static 'mail/img/icons/next.png' %}" alt="" />
-        </button>
-    </div>
-</div>
-
 <div id="mail" class="mail p-2">
-    <div class="mail-top d-flex align-items-center justify-content-between">
-        <button id='back' class="btn me-3 center-flex rounded-circle p-2">
-            <img src="{% static 'mail/img/icons/arrow-back.png' %}" alt="" />
-        </button>
-        <button class="btn center-flex rounded-circle p-2">
-            <img src="{% static 'mail/img/icons/report.png' %}" alt="" />
-        </button>
-        <button class="btn center-flex rounded-circle p-2">
-            <img src="{% static 'mail/img/icons/format-10.png' %}" alt="" />
-        </button>
-        <button class="btn btn-icon center-flex rounded-circle p-2">
-            <img src="{% static 'mail/img/icons/archive-2.svg' %}" alt="" />
-        </button>
-        <button class="btn center-flex rounded-circle p-2">
-            <img src="{% static 'mail/img/icons/drive.png' %}" alt="" />
-        </button>
-        <button class="btn center-flex rounded-circle p-2">
-            <img src="{% static 'mail/img/icons/set.png' %}" alt="" />
-        </button>
-        <div class="right center-flex ms-auto">
-            <div class="count center-flex rounded-3">1-1 из 1</div>
-            <button class="btn center-flex rounded-circle p-2" title="Пред.">
-                <img src="{% static 'mail/img/icons/prev.png' %}" alt="" />
-            </button>
-            <button class="btn center-flex rounded-circle p-2" title="След.">
-                <img src="{% static 'mail/img/icons/next.png' %}" alt="" />
-            </button>
-        </div>
-    </div>
-
     <div class="mail-content">
-        <h2>{{ form.subject }}</h2>
-        <div class="mail-content-user d-flex align-items-center justify-content-between">
-                <img class='rounded-circle me-4' src="{% static 'mail/img/icons/profile.png' %}" alt="" />
-                <div class="profile">
-                    <p class="profile-name m-0">
-                        Pinterest <span> &lt;pinterest@gmail.com&gt; </span>
-                    </p>
-                    <p class='m-0 profile-who'>кому: мне</p>
-                </div>
-                <p class='user-date m-0 ms-auto me-2'>8 нояб.</p>
-                <button class="btn center-flex rounded-circle p-2">
-                <img src="{% static 'mail/img/icons/start.png' %}" alt="" />
-            </button>
-            <button
-                class="btn center-flex rounded-circle p-2"
-            >
-                <img src="{% static 'mail/img/icons/format-4.png' %}" alt="" />
-            </button>
-            <button
-                class="btn center-flex rounded-circle p-2"
-            >
-                <img src="{% static 'mail/img/icons/reply.png' %}" alt="" />
-            </button>
-            <button
-                class="btn center-flex rounded-circle p-2"
-            >
-                <img src="{% static 'mail/img/icons/set.png' %}" alt="" />
-            </button>
-        </div>
-
-        <div class='mail-text'>
-            Не забудьте подтвердить свой адрес электронной почты! <br/><br/>Проверьте, что вы правильно указали свой электронный адрес. Подтвердите эл. адрес Не регистрировались в Pinterest? Сообщите нам. <br/><br/>Добро пожаловать в Pinterest
-        </div>
-
-        <div class='mail-box'>
-            <button class='mail-box-btn next'>
-                <img src="{% static 'mail/img/icons/reply.png' %}" alt="">
-                Ответить
-            </button>
-            <button class='mail-box-btn prev'>
-                <img src="{% static 'mail/img/icons/reply-2.png' %}" alt="">
-                Переслать
-            </button>
-            <button class='mail-box-btn smile'>
-                <img src="{% static 'mail/img/icons/format-4.png' %}" alt="">
-            </button>
-        </div>
+        <form action="{% url 'add-mail' %}" method="post">
+            {% csrf_token %}
+            {{ form.user }}
+            {{ form.category }}
+            <p class="form-control">
+                {{ form.recipients }}
+            </p>
+            <p class="form-control">
+                {{ form.sender }}
+            </p>
+            <p class="form-control">
+                {{ form.subject }}
+            </p>
+            <p class="form-control">
+                {{ form.body }}
+            </p>
+            <button class='mail-box-btn next' id="button-reply2" type="submit">Отправить</button>
+        </form>
     </div>
 </div>
-
 {% endblock content %}

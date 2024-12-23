@@ -3,13 +3,35 @@
 
 {% block content %}
 <div id="mail" class="mail p-2">
+    <div class="left">
+        <div class="wrapper center-flex">
+            <div class="chk d-flex" title="Выбрать">
+                <div class="button">
+                    <img src="{% static 'mail/img/icons/chk.png' %}" alt="" />
+                </div>
+                <div class="button">
+                    <img src="{% static 'mail/img/icons/after.png' %}" alt="" />
+                </div>
+            </div>
+            <button class="btn center-flex rounded-circle p-2 me-2">
+                <img src="{% static 'mail/img/icons/refresh.png' %}" alt="" />
+            </button>
+            <form action="{% url 'delete-mail' email.pk %}" method="post">
+                {% csrf_token %}
+                <button type="submit" title="Удалить"><img src="{% static 'mail/img/icons/format-10.png' %}" alt="Del"></button>
+            </form>
+            <button class="btn center-flex rounded-circle p-2">
+                <img src="{% static 'mail/img/icons/set.png' %}" alt="" />
+            </button>
+        </div>
+    </div>
     <div class="mail-content">
         <h2>{{ email.subject }}</h2>
         <div class="mail-content-user d-flex align-items-center justify-content-between">
             <img class='rounded-circle me-4' src="{% static 'mail/img/icons/profile.png' %}" alt="" />
             <div class="profile">
                 <p class="profile-name m-0">
-                     <span> &lt;{{ email.sender }}&gt; </span>
+                    <span> &lt;{{ email.sender }}&gt; </span>
                 </p>
                 {% if email.sender == email.user.email %}
                 <p class='m-0 profile-who'>кому: {{ email.recipients }}</p>
@@ -24,7 +46,7 @@
             <button class="btn center-flex rounded-circle p-2">
                 <img src="{% static 'mail/img/icons/format-4.png' %}" alt="" />
             </button>
-            <button class="btn center-flex rounded-circle p-2">
+            <button class="btn center-flex rounded-circle p-2" title="Ответить" id="button-reply1">
                 <img src="{% static 'mail/img/icons/reply.png' %}" alt="" />
             </button>
             <button class="btn center-flex rounded-circle p-2">
@@ -37,7 +59,7 @@
         </div>
 
         <div class='mail-box'>
-            <button class='mail-box-btn next'>
+            <button class='mail-box-btn next' id="button-reply2">
                 <img src="{% static 'mail/img/icons/reply.png' %}" alt="">
                 Ответить
             </button>
@@ -49,6 +71,76 @@
                 <img src="{% static 'mail/img/icons/format-4.png' %}" alt="">
             </button>
         </div>
+    </div>
+</div>
+
+<!-- MODAL WINDOW NEW REPLY MAIL -->
+<div class="new" id="new-reply">
+    <div class="new__top">
+        <p class="new__top-title m-0">Новое сообщение</p>
+        <div class="new__top-btn new__top-btn-first">
+            <img src="{% static 'mail/img/icons/new-1.png' %}" alt="" />
+        </div>
+        <div class="new__top-btn resize">
+            <img src="{% static 'mail/img/icons/new-2.png' %}" alt="" />
+        </div>
+        <div class="new__top-btn" id="new-close">
+            <img src="{% static 'mail/img/icons/new-3.png' %}" alt="" />
+        </div>
+    </div>
+
+    <div class="new-container">
+        <form action="#" method="post">
+            {% csrf_token %}
+            <div class="new__who">
+                <p class="m-0 me-2">Кому</p>
+                {{ form.recipients }}
+            </div>
+            <div class="new__who">
+                <p class="m-0 me-2">От кого</p>
+                {{ form.sender }}
+            </div>
+            {{ form.subject }}
+            <div class="profile-name">
+                {{ email.timestamp }}, {{ email.user.first_name }} &lt;{{ email.user.email }}>&gt;
+            </div>
+            {{ form.body|safe }}
+
+            <div class="new__bottom">
+                <button class="new__bottom-send" type="submit">Отправить</button>
+
+                <div class="new__bottom-btn">
+                    <img src="{% static 'mail/img/icons/format-1.png' %}" alt="" />
+                </div>
+                <div class="new__bottom-btn">
+                    <img src="{% static 'mail/img/icons/format-2.png' %}" alt="" />
+                </div>
+                <div class="new__bottom-btn">
+                    <img src="{% static 'mail/img/icons/format-3.png' %}" alt="" />
+                </div>
+                <div class="new__bottom-btn">
+                    <img src="{% static 'mail/img/icons/format-4.png' %}" alt="" />
+                </div>
+                <div class="new__bottom-btn">
+                    <img src="{% static 'mail/img/icons/format-5.png' %}" alt="" />
+                </div>
+                <div class="new__bottom-btn">
+                    <img src="{% static 'mail/img/icons/format-6.png' %}" alt="" />
+                </div>
+                <div class="new__bottom-btn">
+                    <img src="{% static 'mail/img/icons/format-7.png' %}" alt="" />
+                </div>
+                <div class="new__bottom-btn">
+                    <img src="{% static 'mail/img/icons/format-8.png' %}" alt="" />
+                </div>
+                <div class="new__bottom-btn">
+                    <img src="{% static 'mail/img/icons/format-9.png' %}" alt="" />
+                </div>
+                <div class="new__bottom-btn ms-auto">
+                    <img src="{% static 'mail/img/icons/format-10.png' %}" alt="" />
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 {% endblock content %}

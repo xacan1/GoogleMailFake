@@ -392,6 +392,7 @@ button {
 .message .descr span {
 	white-space: nowrap;
 	text-overflow: ellipsis;
+	color: grey;
 }
 
 .message .date {
@@ -797,19 +798,19 @@ textarea {
 
 .help {
 	display: none;
-	position: absolute;
+	background-color: #F2F6FC;
+	/* position: absolute; */
 	right: 0;
 	z-index: 5;
-	background-color: #fff;
 }
 
 .message:hover .help {
 	display: flex;
 }
 
-/* .message:hover .right {
+.message:hover .right {
 	display: none;
-} */
+}
 
 .help .new__bottom-btn {
 	border-radius: 50%;
@@ -1060,4 +1061,13 @@ textarea {
 
 .transparent:hover {
 	background-color: #e2e7eb;
+}
+
+.my-blockquote {
+	border-left: 1px solid grey;
+	padding-left: 1rem;
+}
+
+.message-table {
+	background-color: #F2F6FC;
 }
