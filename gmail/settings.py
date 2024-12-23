@@ -49,6 +49,7 @@ MAIL_APPS = [
     'api.apps.ApiConfig',
     'rest_framework',
     'rest_framework.authtoken',
+    'sslserver',
 ]
 
 INSTALLED_APPS += MAIL_APPS
