@@ -81,7 +81,7 @@ class MailDetailView(LoginRequiredMixin, DetailView, CreateView):
         initial['subject'] = f'RE: {email.subject}'
         initial['sender'] = self.request.user.email
         initial['recipients'] = email.sender
-        initial['body'] = f'\n\n{email.body}'
+        initial['body'] = f'\n____________\n{email.body}'
         return initial
 
     def get_context_data(self, **kwargs):
