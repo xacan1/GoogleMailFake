@@ -16,10 +16,7 @@
             <button class="btn center-flex rounded-circle p-2 me-2">
                 <img src="{% static 'mail/img/icons/refresh.png' %}" alt="" />
             </button>
-            <form action="{% url 'delete-mail' email.pk %}" method="post">
-                {% csrf_token %}
-                <button type="submit" title="Удалить"><img src="{% static 'mail/img/icons/format-10.png' %}" alt="Del"></button>
-            </form>
+            
             <button class="btn center-flex rounded-circle p-2">
                 <img src="{% static 'mail/img/icons/set.png' %}" alt="" />
             </button>
@@ -55,7 +52,7 @@
         </div>
 
         <div class='mail-text'>
-            {{ email.body }}
+            {{ email.body|linebreaks }}
         </div>
 
         <div class='mail-box'>
@@ -92,6 +89,8 @@
     <div class="new-container">
         <form action="#" method="post">
             {% csrf_token %}
+            {{ form.user }}
+            {{ form.category }}
             <div class="new__who">
                 <p class="m-0 me-2">Кому</p>
                 {{ form.recipients }}
@@ -104,7 +103,7 @@
             <div class="profile-name">
                 {{ email.timestamp }}, {{ email.user.first_name }} &lt;{{ email.user.email }}>&gt;
             </div>
-            {{ form.body|safe }}
+            {{ form.body }}
 
             <div class="new__bottom">
                 <button class="new__bottom-send" type="submit">Отправить</button>
