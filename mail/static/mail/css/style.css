@@ -1071,3 +1071,8 @@ textarea {
 .message-table {
 	background-color: #F2F6FC;
 }
+
+.text-mail {
+	font-size: 0.9rem;
+	color: #5C5C5C;
+}

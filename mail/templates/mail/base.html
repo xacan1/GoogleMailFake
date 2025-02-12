@@ -27,13 +27,13 @@
 					</div>
 				</div>
 
-				<form class="col-auto search-form d-flex center-flex px-2 border-1" id="search">
-					<button class="btn center-flex rounded-circle" title="Поиск">
+				<form class="col-auto search-form d-flex center-flex px-2 border-1" id="search" action="{% url 'home' %}" method="get">
+					<button class="btn center-flex rounded-circle submit" title="Поиск" type="submit">
 						<img src="{% static 'mail/img/icons/search.svg' %}" alt="Search" />
 					</button>
 
 					<input id="search-input" class="search-input form-control border-0 shadow-none ms-2 p-0" type="text"
-						aria-label="Поиск в почте" placeholder="Поиск в почте" />
+						name="q" value="{{ query_search }}" aria-label="Поиск в почте" placeholder="Поиск в почте" required />
 
 					<button class="btn center-flex rounded-circle" title="Очистить поле поиска">
 						<img src="{% static 'mail/img/icons/clear.svg' %}" alt="Clear" />
@@ -266,8 +266,10 @@
 						<p class="m-0 me-2">Кому</p>
 						{{ form.recipients }}
 					</div>
-					<div hidden>{{ form.sender }}</div>
-					{{ form.category }}
+					{{ form.sender }}
+					<div hidden>
+						{{ form.category }}
+					</div>
 					{{ form.user }}
 					{{ form.subject }}
 					{{ form.body }}

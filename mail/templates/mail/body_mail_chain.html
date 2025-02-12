@@ -23,7 +23,49 @@
         </div>
     </div>
     <div class="mail-content">
-        <h2>{{ email.subject }}</h2>
+        <div class="accordion accordion-flush" id="accordionMail">
+            {% for chain_email in chain_emails %}
+            <div class="accordion-item">
+                <h2 class="accordion-header px-3" id="heading{{ chain_email.pk }}">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ chain_email.pk }}" aria-expanded="true" aria-controls="heading{{ chain_email.pk }}">
+                        <div class="profile">
+                            <p class="profile-name m-0">
+                                <strong>&lt;{{ chain_email.sender }}&gt;</strong>
+                            </p>
+                            <p class="text-mail">
+                                {{ chain_email.subject }}, {{ chain_email.timestamp }}, {% if chain_email.parent %} {{ chain_email.parent}} {% endif %}
+                            </p>
+                        </div>
+                    </button>
+                </h2>
+                <div class="accordion-collapse collapse {% if forloop.first %} show {% endif %}" id="collapse{{ chain_email.pk }}" aria-labelledby="heading{{ chain_email.pk }}">
+                    <div class="accordion-body">
+                        {% if chain_email.sender == chain_email.user.email %}
+                        <p class="m-0 profile-who">кому: {{ chain_email.recipients }}</p>
+                        {% else %}
+                        <p class="m-0 profile-who">кому: мне</p>
+                        {% endif %}
+
+                        <div class="py-3">
+                            {{ chain_email.body|linebreaks }}
+                        </div>
+                        <div class="attachments">
+                            <ul>
+                            {% for attachment in attachments %}
+                                <li class="d-inline-block">
+                                    <a href="{{ attachment.file.url }}" download><img src="{% static 'mail/img/pdf.png' %}" width="64" alt="{{ attachment.file.name }}"></a>
+                                </li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+
+        <!-- <h2>{{ email.subject }}</h2>
         <div class="mail-content-user d-flex align-items-center justify-content-between">
             <img class='rounded-circle me-4' src="{% static 'mail/img/icons/profile.png' %}" alt="" />
             <div class="profile">
@@ -53,17 +95,7 @@
 
         <div class='mail-text'>
             {{ email.body|linebreaks }}
-        </div>
-
-        <div class="attachments">
-            <ul>
-            {% for attachment in attachments %}
-                <li class="d-inline-block">
-                    <a href="{{ attachment.file.url }}" download><img src="{% static 'mail/img/pdf.png' %}" width="64" alt="{{ attachment.file.name }}"></a>
-                </li>
-            {% endfor %}
-            </ul>
-        </div>
+        </div> -->
 
         <div class='mail-box'>
             <button class='mail-box-btn next' id="button-reply2">

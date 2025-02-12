@@ -4,10 +4,12 @@
 {% block content %}
 <div id="mail" class="mail p-2">
     <div class="mail-content">
-        <form action="{% url 'add-mail' %}" method="post">
+        <form action="{% url 'add-mail' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.user }}
-            {{ form.category }}
+            <p>
+                {{ form.category }}
+            </p>
             <p class="form-control">
                 {{ form.recipients }}
             </p>
@@ -20,6 +22,10 @@
             <p class="form-control">
                 {{ form.body }}
             </p>
+            {{ formset.management_form }}
+            {% for file_form in formset %}
+                {{ file_form.as_p }}
+            {% endfor %}
             <button class='mail-box-btn next' id="button-reply2" type="submit">Отправить</button>
         </form>
     </div>

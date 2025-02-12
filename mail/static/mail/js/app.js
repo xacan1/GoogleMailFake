@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const input = document.getElementById('search-input');
     const searchPopup = document.getElementById('search-popup');
 
-    form.addEventListener('submit', (e) => e.preventDefault());
+    // form.addEventListener('submit', (e) => e.preventDefault());
     input.addEventListener('focus', () => {
         form.classList.add('active');
         searchPopup.classList.add('active');
